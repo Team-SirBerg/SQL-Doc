@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Persönliche Dokumentation</title>
+  <title>User Documentation</title>
   <style>
   @font-face {
   font-family: octicons-link;
@@ -1251,7 +1251,6 @@ pre[class*="language-"] {
   <article class="markdown-body"><h1 class="atx" id="zusammenfassung-datenbanken">Zusammenfassung Datenbanken</h1>
 <hr>
 <p>Von: Sebastian Klinger, Benno Rodehack</p>
-<p>Links: <a href="./glossar.html">Glossar</a>, <a href="./user.html">User Dokumentation</a></p>
 <hr>
 <h2 class="atx" id="inhalt">Inhalt</h2>
 <p><a href="#1-phasen-der-entwicklung-einer-datenbank">1. Phasen der Entwicklung einer Datenbank</a></p>
@@ -1296,6 +1295,8 @@ pre[class*="language-"] {
 <p><a href="#4-rdbms-relational-database-management-system">4. RDBMS</a></p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#41-begriffe">4.1 Begriffe</a></p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#42-aufbau">4.2  Aufbau</a></p>
+<p><a href="#5-einrichtung-von-mysql-auf-ubuntu-server-2204-lts">5. Einrichtung von Mysql auf Ubuntu Server 22.04 LTS</a></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;</p>
 <h2 class="atx" id="1-phasen-der-entwicklung-einer-datenbank">1. Phasen der Entwicklung einer Datenbank</h2>
 <p><img alt="" src="./Bilder/phasen.PNG"></p>
 <hr>
@@ -1584,7 +1585,6 @@ pre[class*="language-"] {
 <p>Wie im Diagramm oben zu sehen ist ist das RDBMS in mehrere Teile (größtenteils Server und Client) aufgebaut. Der Server ist das System, dass tatsächlich die Datenbank und dsa RDBMS beinhaltet. Der Client kann z.B. auf der selben physischen Maschine laufen, sendet dann anfragen an die Server Applikation und erhält so Daten die für die Verarbeitung in der Applikation am Client benötigt werden. Allternativ kann der Client auch in einem anderen Netzwerk stehen und eine Anfrage an den Server schicken, sollte dieser konfiguriert sein das Anfragen aus dem Netz erhalten und verarbeitet werden.</p>
 <h2 class="atx" id="5-einrichtung-von-mysql-auf-ubuntu-server-2204-lts">5 Einrichtung von Mysql auf Ubuntu Server 22.04 LTS</h2>
 <p>In dieser Sektion wird erklärt wie man einen Mysql Server auf einem Ubuntu Server 22.04 LTS Jammy Jellyfish aufsetzt.</p>
-<h3 class="atx" id="initiales-setup">Initiales Setup</h3>
 <p>Zuerst muss das System geupdated werden:</p>
 <pre><code class="fenced-code-block language-shell-session"><span class="token command"><span class="token shell-symbol important">$</span> <span class="token bash language-bash"><span class="token function">sudo</span> <span class="token function">apt-get</span> update <span class="token operator">&amp;&amp;</span> <span class="token function">sudo</span> <span class="token function">apt-get</span> upgrade</span></span></code></pre>
 <p>Dann werden die benötigten Pakete Installiert:</p>
