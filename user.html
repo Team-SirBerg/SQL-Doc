@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Persönliche Dokumentation</title>
+  <title>User Documentation</title>
   <style>
   @font-face {
   font-family: octicons-link;
@@ -1248,371 +1248,230 @@ pre[class*="language-"] {
   <style>.markdown-body{}</style>
 </head>
 <body>
-  <article class="markdown-body"><h1 class="atx" id="zusammenfassung-datenbanken">Zusammenfassung Datenbanken</h1>
-&lt;script&gt;
-    console.log('Hello World')
-&lt;/script&gt;
-
+  <article class="markdown-body"><h1 class="atx" id="user-documentation-for-the-dbms-mysql">User Documentation for the DBMS Mysql</h1>
 <hr>
-<p>Von: Sebastian Klinger, Benno Rodehack</p>
-<p>Links: <a href="./glossar.html">Glossar</a>, <a href="./user.html">User Dokumentation</a></p>
+<p>From: Sebastian Klinger, Benno Rodehack</p>
+<p>Links: <a href="./glossar.html">Glossar</a>, <a href="./index.html">Back to Personal Documentation</a></p>
 <hr>
-<h2 class="atx" id="inhalt">Inhalt</h2>
-<p><a href="#1-phasen-der-entwicklung-einer-datenbank">1. Phasen der Entwicklung einer Datenbank</a></p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#11-externe-phaseanforderungsanalyse">1.1 Externe Phase/Anforderungsanalyse</a></p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#11-externe-phaseanforderungsanalyse">1.2 Konzeptionelle Phase</a></p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#er-modell">ER-Modell</a></p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#beispiel-eines-er-modells">Beispiel eines ER-Modells</a></p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#kardinalitaten">Kardinalitäten</a></p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#13-logische-phase">1.3 Logische Phase</a></p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#14-verfeinerung-des-logischen-modells">1.4 Verfeinerung des logischen Modells</a></p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#15-physische-phase">1.5 Physische Phase</a></p>
-<p><a href="#2-sql-structured-query-language">2. SQL (Structured Query Language)</a></p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#21-ddl-data-definition-language">2.1 DDL (Data Definition Language)</a></p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#create-befehl"><code>CREATE</code></a></p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#variablen-und-der-set-befehl">Variablen</a></p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#drop-befehl"><code>DROP</code></a></p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#alter-befehl"><code>ALTER</code></a></p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#22-dml-data-manipulation-language">2.2 DML (Data Manipulation Language)</a></p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#insert-befehl"><code>INSERT</code></a></p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#update-befehl"><code>UPDATE</code></a></p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#delete-befehl"><code>DELETE</code></a></p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#23-dql-data-query-language">2.3 DQL (Data Query Language)</a></p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#select-befehl"><code>SELECT</code></a></p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#where-befehl"><code>WHERE</code></a></p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#join-befehl"><code>JOIN</code></a></p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#24-dcl-data-control-language">2.4 DCL (Data Control Language)</a></p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#create-user-befehl"><code>CREATE USER</code></a>&nbsp;&nbsp;&nbsp;&nbsp;</p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#grant-befehl"><code>GRANT</code></a></p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#revoke-befehl"><code>REVOKE</code></a></p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#show-grants-befehl"><code>SHOW GRANTS</code></a></p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#drop-user-befehl"><code>DROP USER</code></a></p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#flush-privileges-befehl"><code>FLUSH PRIVILEGES</code></a></p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#nutzliche-befehle">Nützliche Befehle</a></p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#use-befehl"><code>USE</code></a></p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#show-befehl"><code>SHOW</code></a></p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#explain-befehl"><code>EXPLAIN</code></a></p>
-<p><a href="#3-ansi-sparc-architektur">3. ANSI-SPARC Architektur</a></p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#31-geschichte">3.1 Geschichte</a></p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#32-diagramm">3.2 Diagramm</a></p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#33-vorteile-des-drei-ebenen-modells">3.3 Vorteile des Drei-EbenenModells</a></p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#33-nachteile-des-drei-ebenen-modells">3.3 Nachteile des Drei-Ebenen-Modells</a></p>
-<p><a href="#4-rdbms-relational-database-management-system">4. RDBMS</a></p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#41-begriffe">4.1 Begriffe</a></p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#42-aufbau">4.2  Aufbau</a></p>
-<p><a href="#5-einrichtung-von-mysql-auf-ubuntu-server-2204-lts">5. Einrichtung von Mysql auf Ubuntu Server 22.04 LTS</a></p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;</p>
-<h2 class="atx" id="1-phasen-der-entwicklung-einer-datenbank">1. Phasen der Entwicklung einer Datenbank</h2>
-<p><img alt="" src="./Bilder/phasen.PNG"></p>
-<hr>
-<h3 class="atx" id="11-externe-phaseanforderungsanalyse">1.1 Externe Phase/Anforderungsanalyse</h3>
-<p>In dieser Phase sammelt man den Informationsbedarf (IST/SOLL Analyse) und Ordnet ihn.</p>
-<h3 class="atx" id="12-konzptionelle-phase">1.2 Konzptionelle Phase</h3>
-<h4 class="atx" id="er-modell">ER-Modell</h4>
-<p>Ein ER Modell wird meistens genutzt um Datenkardinalitäten zu veranschaulichen.</p>
-<h4 class="atx" id="beispiel-eines-er-modells">Beispiel eines ER-Modells</h4>
-<p>In jeder Tabelle stellt jede Reihe Eine Entität dar. Die Zusammenfassung von mehreren Reihen ist eine Entitätsmenge. Jede Spalte ist ein Attribut.</p>
-<p>Tabelle Item:</p>
-<p>Hier ist der Entitätstyp Item</p>
-<table>
-<thead>
-<tr>
-<th>I_ID</th>
-<th>Name</th>
-<th>ItemType_ID</th>
-<th>Screenshot (als String)</th>
-<th>IsRandomlyRolled</th>
-<th>TierType_ID</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>1</td>
-<td>Eyasluna</td>
-<td>9</td>
-<td><img alt="" src="https://www.bungie.net/common/destiny2_content/screenshots/235827225.jpg"></td>
-<td>true</td>
-<td>5</td>
-</tr>
-<tr>
-<td>2</td>
-<td>The Time-Worn Spire</td>
-<td>13</td>
-<td><img alt="" src="https://www.bungie.net/common/destiny2_content/screenshots/4425887.jpg"></td>
-<td>true</td>
-<td>5</td>
-</tr>
-<tr>
-<td>3</td>
-<td>Edge of Intent</td>
-<td>33</td>
-<td><img alt="" src="https://www.bungie.net/common/destiny2_content/screenshots/14194600.jpg"></td>
-<td>true</td>
-<td>5</td>
-</tr>
-<tr>
-<td>4</td>
-<td>Fighting Lion</td>
-<td>23</td>
-<td><img alt="" src="https://www.bungie.net/common/destiny2_content/screenshots/3549153978.jpg"></td>
-<td>false</td>
-<td>6</td>
-</tr>
-<tr>
-<td>5</td>
-<td>Starfire Protocol</td>
-<td>28</td>
-<td><img width="107" alt="" title="" src="https://www.bungie.net/common/destiny2_content/screenshots/2782999717.jpg"></td>
-<td>false</td>
-<td>6</td>
-</tr>
-</tbody></table>
-<p>Tabelle ItemType (Ausschnitt):</p>
-<p>Hier ist der Entitätstyp ItemType</p>
-<table>
-<thead>
-<tr>
-<th>ItemType_ID</th>
-<th>Name</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>9</td>
-<td>Hand Cannon</td>
-</tr>
-<tr>
-<td>13</td>
-<td>Pulse Rifle</td>
-</tr>
-<tr>
-<td>33</td>
-<td>Glaive</td>
-</tr>
-<tr>
-<td>23</td>
-<td>Grenade Launcher</td>
-</tr>
-<tr>
-<td>28</td>
-<td>Chestplate</td>
-</tr>
-</tbody></table>
-<p>Tabelle TierType (Ausschnitt):</p>
-<p>Hier ist der Entitätstyp TierType</p>
-<table>
-<thead>
-<tr>
-<th>TierType_ID</th>
-<th>Name</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>5</td>
-<td>Legendary</td>
-</tr>
-<tr>
-<td>6</td>
-<td>Exotic</td>
-</tr>
-</tbody></table>
-<h4 class="atx" id="kardinalitaten">Kardinalitäten</h4>
-<p><img alt="" src="./Bilder/1-1beziehung.PNG"></p>
-<p>Erklärung:</p>
-<p>Verb:</p>
-<p><img alt="" src="./Bilder/verb.PNG"></p>
-<p>Fahren stellt hier das "Verb" dar, als was genau die Beziehung zwischen den Tabellen darstellt. Die Striche die von der Raute in der Mitte weggehen stellen die Eigentlichen Kardinalitäten dar.</p>
-<p>Entitätstyp:</p>
-<p><img alt="" src="./Bilder/entit%C3%A4tstyp.PNG"></p>
-<p>Hier ist der Entitätstyp ein Auto. Die "1" auf der Rechten Seite stellt die Beziehung zum anderen Entitätstyp "Fahrer". Da ein Auto von <strong>einem</strong> Fahrer gefahren wird ist diese Beziehung eine 1:1 Beziehung.</p>
-<p>Attribut:</p>
-<p><img alt="" src="./Bilder/attribut.PNG"></p>
-<p>Die Marke stellt hier ein Attribut von einem Auto dar.</p>
-<p><img alt="" src="./Bilder/uebersicht.PNG"></p>
-<p>Weitere Beispiele:</p>
-<p>M:N Beziehung:</p>
-<p><img alt="" src="./Bilder/M-nbeziehung.PNG"></p>
-<p>1:N Beziehung</p>
-<p><img alt="" src="./Bilder/1-nbeziehung.PNG"></p>
-<h3 class="atx" id="13-logische-phase">1.3 Logische Phase</h3>
-<p>In der Logischen Phase wird das ER-Modell in ein Logisches Datenbankmodell umgewandelt. Ein logisches Datenbankmodell legt die Struktur von Datenelementen und ihre Beziehungen untereinander fest. Es ist unabhängig von der physischen Datenbank, die detailliert beschreibt, wie die Daten implementiert werden.</p>
-<p>Beispiel:</p>
-<p><img alt="" src="./Bilder/logischesDatenbankmodell.PNG"></p>
-<h3 class="atx" id="14-verfeinerung-des-logischen-modells">1.4 Verfeinerung des logischen Modells</h3>
-<p>In dieser Phase wird das Logische Modell aus dem Schritt vorher genommen und optimiert (in der hinsicht auf Datenredundanzen etc.)</p>
-<h3 class="atx" id="15-physische-phase">1.5 Physische Phase</h3>
-<p>In dieser Phase wird das DB-Modell mit der <strong>D</strong>ata<strong>D</strong>efinition<strong>L</strong>anguage (DDL) implementiert</p>
-<hr>
-<h2 class="atx" id="2-sql-structured-query-language">2 SQL (<strong>S</strong>tructured Query Language)</h2>
-<p><img alt="" src="./Bilder/sqlUntersprachen.drawio.png"></p>
-<hr>
-<h3 class="atx" id="21-ddl-data-definition-language">2.1 DDL (Data Definition Language)</h3>
-<p>Die DDL ist ein Teil der Structured Query Language und Ermöglicht die Datenstrukturen(Datenbanken, Tabellen) zu beschreiben, zu ändern oder zu entfernen.</p>
-<h5 class="atx" id="create-befehl"><code>CREATE</code> Befehl</h5>
-<p>Dieser Befehl wird für das Anlegen von Datenbanken oder Tabellen.</p>
-<pre><code class="fenced-code-block language-sql"><span class="token keyword">CREATE</span> <span class="token keyword">DATABASE</span> <span class="token keyword">IF</span> <span class="token operator">NOT</span> <span class="token keyword">EXISTS</span> Beispiel<span class="token punctuation">;</span></code></pre>
-<ol>
-<li><p>Das Schlüsselwort <code>CREATE</code> zeigt dem Parser das etwas erstellt werden soll</p>
-</li>
-<li><p>Das Schlüsselwort <code>DATABASE</code> zeigt an das eine Datenbank erstellt werden soll</p>
-</li>
-<li><p><code>IF NOT EXISTS</code> zeigt an das die Datenbank nur dann erstellt werden soll wenn sie nicht existiert</p>
-</li>
-<li><p><code>Beispiel</code> steht für den Namen der Datenbank, er sollte eindeutig sein</p>
-</li>
-</ol>
-<h5 class="atx" id="variablen-und-der-set-befehl">Variablen und der <code>SET</code> Befehl</h5>
-<pre><code class="fenced-code-block language-sql"><span class="token keyword">SET</span> <span class="token variable">@db</span><span class="token operator">=</span> <span class="token string">'Beispiel'</span><span class="token punctuation">;</span></code></pre>
-<p>Das Schlüsselwort <code>SET</code> zeigt dem Parser das eine neue Variable mit dem namen "db" (das @ muss vorhanden sein)</p>
-<p>Diese kann dann im weiteren verlauf der Query ablaufen.</p>
-<h5 class="atx" id="drop-befehl"><code>DROP</code> Befehl</h5>
-<pre><code class="fenced-code-block language-sql"><span class="token keyword">DROP</span> <span class="token keyword">DATABASE</span> Beispiel<span class="token punctuation">;</span></code></pre>
-<ol>
-<li><p><code>Drop</code>zeigt hier an das etwas gelöscht werden muss</p>
-</li>
-<li><p><code>Database</code> zeigt dem Parser das eine Datenbank gemeint ist</p>
-</li>
-<li><p><code>Beispiel</code> ist der Name der zu löschenden Datenbank</p>
-</li>
-</ol>
-<h5 class="atx" id="alter-befehl"><code>ALTER</code> Befehl</h5>
-<pre><code class="fenced-code-block language-sql"><span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span> Item <span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
-<ol>
-<li><p><code>ALTER</code> zeigt das eine vorhandene Tabelle oder Datenbank geändert werden soll</p>
-</li>
-<li><p><code>TABLE</code> = Tabelle</p>
-</li>
-<li><p><code>Item</code> = Name der Tabelle (siehe oben unter 1.2)</p>
-</li>
-</ol>
-<h3 class="atx" id="22-dml-data-manipulation-language">2.2 DML (Data Manipulation Language)</h3>
-<p>Die DML (Data Manipulation Language) ist ein Teil der SQL-Sprache, die sich mit allen Auswahl-/Einfüge-/Änderungs- und Löschoperationen beschäftigt. Besonders bei Auswahloperationen kann man enorme Unterschiede feststellen, die sich in ihrer Antwortgeschwindigkeit widerspiegeln.</p>
-<h4 class="atx" id="insert-befehl"><code>INSERT</code> Befehl</h4>
-<p>Ein Befehl um Datensätze zu erstellen</p>
-<pre><code class="fenced-code-block language-sql"><span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> Item <span class="token punctuation">(</span>I_ID<span class="token punctuation">,</span> Name<span class="token punctuation">,</span> Screenshot<span class="token punctuation">)</span> <span class="token keyword">VALUES</span> <span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">,</span> <span class="token string">'Phoenix Protocol'</span><span class="token punctuation">,</span> <span class="token string">'https://www.bungie.net/common/destiny2_content/screenshots/4057299719.jpg'</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
-<h5 class="atx" id="update-befehl"><code>UPDATE</code> Befehl</h5>
-<p>Ein Befehl um Datensätze zu verändern</p>
-<pre><code class="fenced-code-block language-sql"><span class="token keyword">UPDATE</span> Item <span class="token keyword">SET</span> ItemType_ID <span class="token operator">=</span> <span class="token string">'28'</span> <span class="token operator">AND</span> TierType <span class="token operator">=</span> <span class="token string">'6'</span> <span class="token operator">AND</span> IsRandomlyRolled <span class="token operator">=</span> <span class="token string">'false'</span> <span class="token keyword">WHERE</span> I_ID <span class="token operator">=</span> <span class="token string">'10'</span><span class="token punctuation">;</span></code></pre>
-<h5 class="atx" id="delete-befehl"><code>DELETE</code> Befehl</h5>
-<p>Ein Befehl um Datensätze zu löschen</p>
-<pre><code class="fenced-code-block language-sql"><span class="token keyword">DELETE</span> <span class="token keyword">FROM</span> Item <span class="token keyword">WHERE</span> I_ID <span class="token operator">=</span> <span class="token string">'10'</span><span class="token punctuation">;</span></code></pre>
-<p>Wenn alle Datensätze aus einer Tabelle gelöscht werden sollen kann auch einfach nur:</p>
-<pre><code class="fenced-code-block language-sql"><span class="token keyword">DELETE</span> <span class="token keyword">FROM</span> Item<span class="token punctuation">;</span></code></pre>
-<p>genutzt werden</p>
-<h4 class="atx" id="23-dql-data-query-language">2.3 DQL (Data Query Language)</h4>
-<p>Hin und wieder taucht auch eine eigene Kategorie Data Query Language (DQL) für die Abfrage von Daten auf. Diese Einteilung ist jedoch, auf Grund der nicht vorhandenen Standardisierung, nicht allgemein anerkannt.</p>
-<h5 class="atx" id="select-befehl"><code>SELECT</code> Befehl</h5>
-<p>Der Simpelste Select Befehl der über eine Tabelle geht und diese ausgibt sieht so aus:</p>
-<pre><code class="fenced-code-block language-sql"><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> Item<span class="token punctuation">;</span></code></pre>
-<h5 class="atx" id="where-befehl"><code>WHERE</code> Befehl</h5>
-<p>Um Datensätze zu filtern wird die "Where" clause genutzt</p>
-<pre><code class="fenced-code-block language-sql"><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> Item <span class="token keyword">WHERE</span> I_ID <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span></code></pre>
-<h5 class="atx" id="join-befehl"><code>JOIN</code> Befehl</h5>
-<p>Um mehrere Tabellen miteinander zu verknüpfen kann ein Join Befehl genutzt werden</p>
-<p>Inner Join:</p>
-<p><img alt="" src="./Bilder/innerjoin.png"></p>
-<p>Ein Inner Join wird genutzt um nur die Datenstätze auszugeben die in beiden Tabellen vorhanden sind</p>
-<pre><code class="fenced-code-block language-sql"><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> Item
-    <span class="token keyword">INNER</span> <span class="token keyword">JOIN</span> ItemTyp <span class="token keyword">ON</span> ItemTyp<span class="token punctuation">.</span>ItemType_ID <span class="token operator">=</span> Item<span class="token punctuation">.</span>I_ID
-<span class="token keyword">WHERE</span> Item<span class="token punctuation">.</span>I_ID <span class="token operator">=</span> <span class="token string">"10"</span><span class="token punctuation">;</span></code></pre>
-<p>Wenn mehrere Felder mit gleichem namen vorkommen in den Tabellen die Verknüpft werden, muss mit TabellenName.SpaltenName gearbeitet werden damit der Parser weiß welche Spalte gemeint ist.</p>
-<h1 class="atx" id=""></h1>
-<p><code>LEFT JOIN</code> und <code>RIGHT JOIN</code></p>
-<p>Left Join:</p>
-<p><img alt="" src="./Bilder/2018-08-image25-1.jpg"></p>
-<p>Right Join:</p>
-<p><img alt="" src="./Bilder/right-join.png"></p>
-<p>Ein Left oder Right Join wird auch zum verknüpfen von Tabellen genutzt. </p>
-<pre><code class="fenced-code-block language-sql"><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> Item 
-    <span class="token keyword">LEFT</span> <span class="token keyword">JOIN</span> ItemType <span class="token keyword">ON</span> ItemTyp<span class="token punctuation">.</span>ItemType_ID <span class="token operator">=</span> Item<span class="token punctuation">.</span>I_ID
-<span class="token keyword">WHERE</span> Item<span class="token punctuation">.</span>I_ID <span class="token operator">=</span> <span class="token string">"10"</span><span class="token punctuation">;</span></code></pre>
-<h4 class="atx" id="24-dcl-data-control-language">2.4 DCL (Data Control Language)</h4>
-<p>Die DCL (Data Control Language) ist der letzte Teil der Sprache SQL, welche die Berechtigungsvergabe von Lese- und Schreibrechten gewährleistet. Die Nachvolgenden Befehle sollten auf dem Server mit Root Rechten ausgeführt werden.</p>
-<h5 class="atx" id="create-user-befehl"><code>CREATE USER</code> Befehl</h5>
-<pre><code class="fenced-code-block language-sql"><span class="token keyword">CREATE</span> <span class="token keyword">USER</span> <span class="token string">'username'</span><span class="token variable">@'erlaubter_host'</span> IDENTIFIED <span class="token keyword">BY</span> <span class="token string">'password'</span><span class="token punctuation">;</span></code></pre>
-<p>Hier mit wird ein neuer User erstellt der mit dem Passwort 'password' authentifiziert wird. Wenn jeder host erlaubt werden soll kann '%' als wildcard benutzt werden.</p>
-<h5 class="atx" id="grant-befehl"><code>GRANT</code> Befehl</h5>
-<pre><code class="fenced-code-block language-sql"><span class="token keyword">GRANT</span> <span class="token keyword">CREATE</span><span class="token punctuation">,</span> <span class="token keyword">ALTER</span><span class="token punctuation">,</span> <span class="token keyword">DROP</span><span class="token punctuation">,</span> <span class="token keyword">INSERT</span><span class="token punctuation">,</span> <span class="token keyword">UPDATE</span><span class="token punctuation">,</span> <span class="token keyword">DELETE</span><span class="token punctuation">,</span> <span class="token keyword">SELECT</span><span class="token punctuation">,</span> <span class="token keyword">REFERENCES</span><span class="token punctuation">,</span> RELOAD <span class="token keyword">on</span> db_name<span class="token punctuation">.</span>table_name <span class="token keyword">TO</span> <span class="token string">'username'</span><span class="token variable">@'erlaubter_host'</span> <span class="token keyword">WITH</span> <span class="token keyword">GRANT</span> <span class="token keyword">OPTION</span><span class="token punctuation">;</span></code></pre>
-<p>Hier mit werden dem ausgewählten User die Rechte CREATE, ALTER, DROP, INSERT, UPDATE, DELETE, SELECT , REFERENCES, RELOAD gegeben.</p>
-<p>Alternativ kann einem User auch alle Berechtigungen(Admin) geben werden:</p>
-<pre><code class="fenced-code-block language-sql"><span class="token keyword">GRANT</span> <span class="token keyword">ALL</span> <span class="token keyword">PRIVILEGES</span> <span class="token keyword">ON</span> db_name<span class="token punctuation">.</span>table_name <span class="token keyword">TO</span> <span class="token string">'username'</span><span class="token variable">@'erlaubter_host'</span> <span class="token keyword">WITH</span> <span class="token keyword">GRANT</span> <span class="token keyword">OPTION</span></code></pre>
-<p>Wenn der User für alle Tabellen  und Datenbanken Admin berechtigungen haben soll dann kann statt db_name und table_name auch ein '*' genutzt werden</p>
-<h5 class="atx" id="revoke-befehl"><code>REVOKE</code> Befehl</h5>
-<pre><code class="fenced-code-block language-sql"><span class="token keyword">REVOKE</span> type_of_permission <span class="token keyword">ON</span> db_name<span class="token punctuation">.</span>table_name <span class="token keyword">FROM</span> <span class="token string">'username'</span><span class="token variable">@'erlaubter_host'</span></code></pre>
-<p>Hiermit wird dem user das Recht wieder entzogen.</p>
-<h5 class="atx" id="show-grants-befehl"><code>SHOW GRANTS</code> Befehl</h5>
-<pre><code class="fenced-code-block language-sql"><span class="token keyword">SHOW</span> GRANTS <span class="token keyword">FOR</span> <span class="token string">'username'</span><span class="token variable">@'erlaubter_host'</span><span class="token punctuation">;</span></code></pre>
-<p>Hiermit wird angezeigt welche Recht ein User im Moment hat</p>
-<h5 class="atx" id="drop-user-befehl"><code>DROP USER</code> Befehl</h5>
-<pre><code class="fenced-code-block language-sql"><span class="token keyword">DROP</span> <span class="token keyword">USER</span> <span class="token string">'username'</span><span class="token variable">@'erlaubter_host'</span><span class="token punctuation">;</span></code></pre>
-<p>Hiermit wird der User wieder gelöscht und hat keinen zugriff mehr auf die Datenbank</p>
-<h5 class="atx" id="flush-privileges-befehl">!!!<code>FLUSH PRIVILEGES</code> Befehl!!!</h5>
-<pre><code class="fenced-code-block language-sql">FLUSH <span class="token keyword">PRIVILEGES</span><span class="token punctuation">;</span></code></pre>
-<p>Dieser Befehl ist besonders wichtig, da er die Privilegien Tabelle neu lädt. Dieser Befehl sollte vor allem nach dem erstellen oder ändern von Nutzern ausgeführt werden.</p>
-<h4 class="atx" id="nutzliche-befehle">Nützliche Befehle</h4>
-<h5 class="atx" id="use-befehl"><code>USE</code> Befehl</h5>
-<pre><code class="fenced-code-block language-sql"><span class="token keyword">USE</span> db_name</code></pre>
-<p>Wechselt in die angegebene Datenbank</p>
-<h5 class="atx" id="show-befehl"><code>SHOW</code> Befehl</h5>
-<pre><code class="fenced-code-block language-sql"><span class="token keyword">SHOW</span> <span class="token keyword">TABLES</span><span class="token punctuation">;</span> 
-<span class="token keyword">SHOW</span> <span class="token keyword">Databases</span><span class="token punctuation">;</span></code></pre>
-<p>Zeigt je nach Befehl alle vorhandenen Tabellen oder Datenbanken an</p>
-<h5 class="atx" id="explain-befehl"><code>EXPLAIN</code> Befehl</h5>
-<pre><code class="fenced-code-block language-sql"><span class="token keyword">EXPLAIN</span> Item<span class="token punctuation">;</span></code></pre>
-<p>Gibt detailliert an wie die Tabelle/Datenbank aufgebaut ist (Datentypen, etc.)</p>
-<hr>
-<h2 class="atx" id="3-ansi-sparc-architektur">3 ANSI-SPARC-Architektur</h2>
-<h3 class="atx" id="31-geschichte">3.1 Geschichte</h3>
-<p>Die ANSI-SPARC-Architektur wurde 1975 vom Standards Planning und Requirements Committee (SPARC) des American National Standards Institute ins Leben gerufen und hat dasd Ziel den Benutzer einer Datenbank vor nachteiligen Auswirkung von Änderungen in der Datenbankstruktur zu schützen ([ANSI-SPARC-Architektur – Wikipedia](siehe auch Wikipedia))</p>
-<h3 class="atx" id="32-diagramm">3.2 Diagramm</h3>
-<p><img alt="" src="./Bilder/ansi-sparc.PNG"></p>
-<hr>
-<h3 class="atx" id="33-vorteile-des-drei-ebenen-modells">3.3 Vorteile des Drei-Ebenen-Modells</h3>
-<ul>
-<li><p>Physische Datenunabhängigkeit: Die Interne Ebene ist von der konzeptionellen und externen Ebene getrennt. Physische Änderungen, z.B. des Speichermediums (Festplatten, etc.) oder des Datenbankprodukts (Mysql, Mariadb, Oracle DB, etc.) wirken sich nicht auf die konzeptionelle oder externe Ebene aus.</p>
-</li>
-<li><p>Logische Datenunabhängigkeit: Die konzeptionelle und die externe Ebene sind getrennt, was bedeutet dass änderungen an der Datenbankstruktur (konzeptionelle Ebene, Zweite Ebene) keine Auswirkungen auf die externe Ebene, also die Masken-Layouts, Listen und APIs haben</p>
-</li>
-</ul>
-<p>All diese Mechanismen sind dafür gedacht um das gesamte System robuster und fehler toleranter zu machen. Es lässt sich auch sagen das wenn eine Ebene nicht richtig funktioniert werden die Daten meist nicht verändert oder gehen nicht verloren. </p>
-<h3 class="atx" id="34-nachteile-des-drei-ebenen-modells">3.4 Nachteile des Drei-Ebenen-Modells</h3>
-<ul>
-<li>Komplexität: Durch die Drei Ebenen muss viel zwischen den Ebenen kommuniziert werden, was bedeutet das mehr Fehler beim Endnutzer und auch schon in der Entwicklung von neuen Produkten auftreten können</li>
-</ul>
-<hr>
-<h2 class="atx" id="4-rdbms-relational-database-management-system">4 RDBMS (Relational Database Management System)</h2>
-<p><img alt="" src="./Bilder/rdbms.PNG"></p>
-<hr>
-<h3 class="atx" id="41-begriffe">4.1 Begriffe</h3>
-<p>R: Relationales (Tabellenbasiert)</p>
-<p>D: Datenbank (Database)</p>
-<p>M: Management (Management System wie bsp. mariadb, mysql, Oracle DB, Microsoft SQL Server)</p>
-<p>S: System</p>
-<h3 class="atx" id="42-aufbau">4.2 Aufbau</h3>
-<p>Wie im Diagramm oben zu sehen ist ist das RDBMS in mehrere Teile (größtenteils Server und Client) aufgebaut. Der Server ist das System, dass tatsächlich die Datenbank und dsa RDBMS beinhaltet. Der Client kann z.B. auf der selben physischen Maschine laufen, sendet dann anfragen an die Server Applikation und erhält so Daten die für die Verarbeitung in der Applikation am Client benötigt werden. Allternativ kann der Client auch in einem anderen Netzwerk stehen und eine Anfrage an den Server schicken, sollte dieser konfiguriert sein das Anfragen aus dem Netz erhalten und verarbeitet werden.</p>
-<h2 class="atx" id="5-einrichtung-von-mysql-auf-ubuntu-server-2204-lts">5 Einrichtung von Mysql auf Ubuntu Server 22.04 LTS</h2>
-<p>In dieser Sektion wird erklärt wie man einen Mysql Server auf einem Ubuntu Server 22.04 LTS Jammy Jellyfish aufsetzt.</p>
-<p>Zuerst muss das System geupdated werden:</p>
+<p>In this Document you will find everything you need to know about the DBMS Mysql. How to set it up, how to use it and how to let others in your Network access it.</p>
+<h2 class="atx" id="initial-setup">Initial Setup</h2>
+<p>For this step, it is assumed that you have an Ubuntu Server 22.04 LTS Jammy Jellyfish setup and ready to go. Don't worry, we will keep the Command Line stuff to a minimum.</p>
+<h4 class="atx" id="update-the-system">Update the System</h4>
+<p>Use the bellow command to Update the System, to ensure that you will get the newest Version of mysql.</p>
 <pre><code class="fenced-code-block language-shell-session"><span class="token command"><span class="token shell-symbol important">$</span> <span class="token bash language-bash"><span class="token function">sudo</span> <span class="token function">apt-get</span> update <span class="token operator">&amp;&amp;</span> <span class="token function">sudo</span> <span class="token function">apt-get</span> upgrade</span></span></code></pre>
-<p>Dann werden die benötigten Pakete Installiert:</p>
-<pre><code class="fenced-code-block language-shell-session"><span class="token command"><span class="token shell-symbol important">$</span> <span class="token bash language-bash"><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> mysql-server tmux</span></span></code></pre>
-<p>Standardmäßig sollte jetzt schon der Server laufen. Das kann mit diesem Command getestet werden:</p>
+<p>Now we can install the Mysql Server:</p>
+<pre><code class="fenced-code-block language-shell-session"><span class="token command"><span class="token shell-symbol important">$</span> <span class="token bash language-bash"><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> mysql-server</span></span></code></pre>
+<p>That is actually all of it! You now have a Mysql Server installed! The installation process should have started the Server, but you can verify that by using:</p>
 <pre><code class="fenced-code-block language-shell-session"><span class="token command"><span class="token shell-symbol important">$</span> <span class="token bash language-bash"><span class="token function">sudo</span> systemctl status mysql</span></span></code></pre>
-<p>Falls der Server im Netzwerk verfügbar sein soll muss die Config Datei des Servers geändert werden. In der Datei in /etc/mysql/mysql.conf.d/mysqld.cnf muss der punkt bind-address auf die IP der Maschine geändert werden:</p>
+<p>If there is a green Dot and it says active, then everything is allright.</p>
+<p>If it is not started, use:</p>
+<pre><code class="fenced-code-block language-shell-session"><span class="token command"><span class="token shell-symbol important">$</span> <span class="token bash language-bash"><span class="token function">sudo</span> systemctl <span class="token builtin class-name">enable</span> --now mysql</span></span></code></pre>
+<p>or:</p>
+<pre><code class="fenced-code-block language-shell-session"><span class="token command"><span class="token shell-symbol important">$</span> <span class="token bash language-bash"><span class="token function">sudo</span> systemctl restart mysql</span></span></code></pre>
+<h4 class="atx" id="configuring-network-access">Configuring Network access</h4>
+<p>If you want others in your Network to access the Server, you will need to do a bit more work. </p>
+<p>Start with editing your mysql config:</p>
 <pre><code class="fenced-code-block language-shell-session"><span class="token command"><span class="token shell-symbol important">$</span> <span class="token bash language-bash"><span class="token function">sudo</span> <span class="token function">nano</span> /etc/mysql/mysql.conf.d/mysqld.cnf</span></span></code></pre>
-<p>Ungefähr so etwas steht in der Datei:</p>
-<pre><code class="fenced-code-block language-shellsession"><span class="token output">...
+<p>There should be a Line that says "bind-address". Change the Number behind the = sign to the ip address of the server:</p>
+<pre><code class="fenced-code-block language-shell-session"><span class="token output">...
 bind-address            = 127.0.0.1
 mysqlx-bind-address     = 127.0.0.1
 ...</span></code></pre>
-<p>Das muss zu etwas so ähnlichem geändert werden:</p>
-<pre><code class="fenced-code-block">...
-bind-address&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= 1.1.1.1
-mysqlx-bind-address&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= 127.0.0.1
-...</code></pre>
-<p>Dann muss der Server neugestartet werden:</p>
+<p>to</p>
+<pre><code class="fenced-code-block language-shell-session"><span class="token output">...
+bind-address            = &lt;your-ip-address&gt;
+mysqlx-bind-address     = 127.0.0.1
+...</span></code></pre>
+<p>Now you need to restart the Server:</p>
 <pre><code class="fenced-code-block language-shell-session"><span class="token command"><span class="token shell-symbol important">$</span> <span class="token bash language-bash"><span class="token function">sudo</span> systemctl restart mysql</span></span></code></pre>
-<p>Jetzt kann der Server benutzt werden:</p>
-<pre><code class="fenced-code-block language-shell-session"><span class="token command"><span class="token shell-symbol important">$</span> <span class="token bash language-bash"><span class="token function">sudo</span> mysql -u root</span></span>
-<span class="token output">mysql&gt; SELECT....</span></code></pre>
+<p>You are good to go!</p>
+<h2 class="atx" id="using-the-dbms">Using the DBMS</h2>
+<h4 class="atx" id="first-things-first-accessing-the-dbms">First things first: Accessing the DBMS</h4>
+<p>You have multiple Ways of doing this:</p>
+<ol>
+<li><p>Using an External Programm (e.g Data Grip from Jetbrains)</p>
+<ul>
+<li>You can use an External Programm (like Data Grip) to access the Server, that might be more convenient for you, but it also <strong>requires</strong> you to enable Networking on the Server, wich is a thing you might not want to do depending on your environment</li>
+</ul>
+</li>
+<li><p>Using the Command Line Interface (preffered way if you cannot or do not want to enable Networking)</p>
+<ul>
+<li><p>This is the Method we will be using</p>
+</li>
+<li><p>You can login to your DBMS by using <code>$ sudo mysql -u root</code> on the Command Line Interface on the Ubuntu Machine</p>
+</li>
+</ul>
+</li>
+</ol>
+<h4 class="atx" id="operating-the-dbms">Operating the DBMS</h4>
+<h5 class="atx" id="running-scripts">Running Scripts</h5>
+<p>To run scripts (that your software department gave you or something like that) just use:</p>
+<pre><code class="fenced-code-block language-sql">SOURCE path<span class="token operator">/</span><span class="token keyword">to</span><span class="token operator">/</span><span class="token keyword">file</span><span class="token punctuation">.</span><span class="token keyword">sql</span><span class="token punctuation">;</span></code></pre>
+<h5 class="atx" id="listing-all-databases">Listing all Databases</h5>
+<pre><code class="fenced-code-block language-sql"><span class="token keyword">SHOW</span> <span class="token keyword">DATABASES</span><span class="token punctuation">;</span></code></pre>
+<p>This would return something like this:</p>
+<table>
+<thead>
+<tr>
+<th>Databases</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>information_schema</td>
+</tr>
+<tr>
+<td>izanami</td>
+</tr>
+<tr>
+<td>monitor</td>
+</tr>
+<tr>
+<td>mysql</td>
+</tr>
+<tr>
+<td>performance_schema</td>
+</tr>
+<tr>
+<td>sys</td>
+</tr>
+<tr>
+<td>statping</td>
+</tr>
+</tbody></table>
+<p><sub>excerpt from my database server</sub></p>
+<h5 class="atx" id="change-into-a-database">Change into a Database</h5>
+<pre><code class="fenced-code-block language-sql"><span class="token keyword">USE</span> <span class="token operator">&lt;</span>your_db_name<span class="token operator">&gt;</span><span class="token punctuation">;</span></code></pre>
+<p>This will change your CLI into the CLI of the Database Name that you provided</p>
+<h5 class="atx" id="listing-all-tables">Listing all Tables</h5>
+<pre><code class="fenced-code-block language-sql"><span class="token keyword">SHOW</span> <span class="token keyword">TABLES</span><span class="token punctuation">;</span></code></pre>
+<p>This would return something like this (your table names are obviously different):</p>
+<table>
+<thead>
+<tr>
+<th>Tables_in_izanami</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>CategoryItemDefinition</td>
+</tr>
+<tr>
+<td>CollectiblePresentationNode</td>
+</tr>
+<tr>
+<td>DamageItemDefinition</td>
+</tr>
+<tr>
+<td>DestinyAchievementDefinition</td>
+</tr>
+<tr>
+<td>DestinyActivityDefinition</td>
+</tr>
+<tr>
+<td>...</td>
+</tr>
+</tbody></table>
+<h5 class="atx" id="creating-databases-and-tables">Creating databases and Tables</h5>
+<p>To Create a Database you can use the <code>CREATE DATABASE</code> statement:</p>
+<pre><code class="fenced-code-block language-sql"><span class="token keyword">CREATE</span> <span class="token keyword">DATABASE</span> database_name<span class="token punctuation">;</span></code></pre>
+<p>To create a Table you can issue the <code>CREATE TABLE</code> statement. You must provide at least one column for the Table, else the command will fail.</p>
+<pre><code class="fenced-code-block language-sql"><span class="token keyword">CREATE</span> <span class="token keyword">TABLE</span> table_name {
+    column_name datatype<span class="token punctuation">,</span>
+    column_name_2 datatype<span class="token punctuation">,</span>
+    column_name_3 datatype<span class="token punctuation">,</span>
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+}<span class="token punctuation">;</span></code></pre>
+<h5 class="atx" id="deleting-a-database-or-table">Deleting a Database or Table</h5>
+<p>The <code>DROP</code> keyword is used to Delete tables and Databases. <strong>BE CAREFULL THOUGH:</strong> This will delete every bit of Information from these Tables or Databases.</p>
+<p>Database</p>
+<pre><code class="fenced-code-block language-sql"><span class="token keyword">DROP</span> <span class="token keyword">DATABASE</span> database_name<span class="token punctuation">;</span></code></pre>
+<p>Table:</p>
+<pre><code class="fenced-code-block language-sql"><span class="token keyword">DROP</span> <span class="token keyword">TABLE</span> table_name<span class="token punctuation">;</span></code></pre>
+<h5 class="atx" id="altering-tables">Altering Tables</h5>
+<p>The <code>ALTER TABLE</code> statement is commonly used to either delete, add or modify a column</p>
+<p>Add Column:</p>
+<pre><code class="fenced-code-block language-sql"><span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span> table_name
+<span class="token keyword">ADD</span> column_name datatype<span class="token punctuation">;</span></code></pre>
+<p>Drop Column:</p>
+<pre><code class="fenced-code-block language-sql"><span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span> table_name
+<span class="token keyword">DROP</span> <span class="token keyword">COLUMN</span> column_name<span class="token punctuation">;</span></code></pre>
+<p>Modify Column:</p>
+<pre><code class="fenced-code-block language-sql"><span class="token keyword">ALTER</span> <span class="token keyword">TABLE</span> table_name
+<span class="token keyword">MODIFY</span> <span class="token keyword">COLUMN</span> column_name datatype<span class="token punctuation">;</span></code></pre>
+<h5 class="atx" id="inserting-records">Inserting records</h5>
+<p>The <code>INSERT</code> keyword is used to add new Datasets to a Table. Normally an Administrator shouldn't be required to add new Records to tables (because scripts or applications normally do that), but it is allways good to have the knowledge should the need arrise.</p>
+<pre><code class="fenced-code-block language-sql"><span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> table_name <span class="token punctuation">(</span>column_name1<span class="token punctuation">,</span> column_name2<span class="token punctuation">,</span> column_name3<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span> <span class="token keyword">VALUES</span> <span class="token punctuation">(</span>value1<span class="token punctuation">,</span> value2<span class="token punctuation">,</span> value3<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>You do not have to insert into every column of the table. You can also insert into specific columns:</p>
+<pre><code class="fenced-code-block language-sql"><span class="token keyword">INSERT</span> <span class="token keyword">INTO</span> table_name <span class="token punctuation">(</span>column_name1<span class="token punctuation">,</span> column_name3<span class="token punctuation">)</span> <span class="token keyword">VALUES</span> <span class="token punctuation">(</span>value1<span class="token punctuation">,</span> value3<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>This will insert into column 1 and 3 but not into 2.</p>
+<h5 class="atx" id="getting-specific-records">Getting Specific Records</h5>
+<p>The <code>SELECT</code> keyword and <code>WHERE</code> Statements are used to Filter Records from Tables</p>
+<h6 class="atx" id="get-every-record">Get every Record</h6>
+<p>To get every record of a Table you can use:</p>
+<pre><code class="fenced-code-block language-sql"><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> table_name</code></pre>
+<p>This is an Example if you want to get every record form a table, from one of my tables</p>
+<p>Statement:</p>
+<pre><code class="fenced-code-block language-sql"><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> EnumItemType</code></pre>
+<p>Result:</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>None</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Currency</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Armor</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Weapon</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Message</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+</tr>
+</tbody></table>
+<h6 class="atx" id="filtering-records">Filtering Records</h6>
+<p>To only get Specific Records from a Table you can use the <code>WHERE</code> Statement.</p>
+<pre><code class="fenced-code-block language-sql"><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> table_name <span class="token keyword">WHERE</span> condition</code></pre>
+<p>A "condition" could be a comparision between a column and a Value that you provide.</p>
+<p>Example:</p>
+<p>Statement:</p>
+<pre><code class="fenced-code-block language-sql"><span class="token keyword">SELECT</span> <span class="token operator">*</span> <span class="token keyword">FROM</span> EnumItemType <span class="token keyword">WHERE</span> ID <span class="token operator">=</span> <span class="token number">2</span></code></pre>
+<p>Result:</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2</td>
+<td>Armor</td>
+</tr>
+</tbody></table>
+<h5 class="atx" id="editing-records">Editing Records</h5>
+<p>You can update Records after you inserted them.</p>
+<pre><code class="fenced-code-block language-sql"><span class="token keyword">UPDATE</span> table_name
+<span class="token keyword">SET</span> column_name1 <span class="token operator">=</span> value1<span class="token punctuation">,</span> column_name2 <span class="token operator">=</span> value2
+<span class="token keyword">WHERE</span> condition<span class="token punctuation">;</span></code></pre>
+<p>You can use the condition of the Filtering Records Section to update specific records.</p>
+<p><strong>Note</strong>: You should always be carefull when you update existing records manually. It could seriously break an application or the user experience.</p>
+<h1 class="atx" id=""></h1>
 </article>
 </body>
 </html>
